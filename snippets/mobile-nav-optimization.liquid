@@ -1,0 +1,112 @@
+{% comment %}
+Mobile Navigation - Performance Optimized
+Add this to your existing header/navigation
+{% endcomment %}
+
+<nav class="mobile-nav" role="navigation" aria-label="Mobile menu">
+  <button 
+    class="mobile-menu-toggle" 
+    aria-controls="mobile-menu" 
+    aria-expanded="false"
+    aria-label="Toggle menu"
+  >
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+      <line x1="3" y1="6" x2="21" y2="6" stroke-width="2" stroke-linecap="round"/>
+      <line x1="3" y1="12" x2="21" y2="12" stroke-width="2" stroke-linecap="round"/>
+      <line x1="3" y1="18" x2="21" y2="18" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </button>
+
+  <div id="mobile-menu" class="mobile-menu hidden" role="region">
+    {% for link in linklists.main-menu.links %}
+      <a href="{{ link.url }}" class="mobile-menu-item">{{ link.title }}</a>
+    {% endfor %}
+  </div>
+</nav>
+
+<style>
+  .mobile-nav {
+    display: none;
+    position: relative;
+  }
+
+  .mobile-menu-toggle {
+    min-height: 44px;
+    min-width: 44px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mobile-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #ddd;
+    flex-direction: column;
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-menu.hidden {
+    display: none;
+  }
+
+  .mobile-menu-item {
+    padding: 16px;
+    border-bottom: 1px solid #f0f0f0;
+    text-decoration: none;
+    color: #333;
+    display: block;
+    transition: background-color 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .mobile-menu-item:active {
+    background-color: #f5f5f5;
+  }
+
+  @media (max-width: 768px) {
+    .mobile-nav {
+      display: block;
+    }
+  }
+</style>
+
+<script defer>
+  (function() {
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const menu = document.querySelector('.mobile-menu');
+    
+    if (toggle && menu) {
+      toggle.addEventListener('click', function() {
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+        this.setAttribute('aria-expanded', !isExpanded);
+        menu.classList.toggle('hidden');
+      });
+
+      // Close on link click
+      menu.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function() {
+          toggle.setAttribute('aria-expanded', 'false');
+          menu.classList.add('hidden');
+        });
+      });
+
+      // Close on escape
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          toggle.setAttribute('aria-expanded', 'false');
+          menu.classList.add('hidden');
+        }
+      });
+    }
+  })();
+</script>

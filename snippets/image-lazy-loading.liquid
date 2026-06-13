@@ -1,0 +1,25 @@
+{% comment %}
+Lazy Loading Image Snippet
+Usage: {% render 'image-lazy-loading' with image: product.featured_image %}
+
+Works with your existing image rendering
+{% endcomment %}
+
+{% if image %}
+  <img
+    src="{{ image.src | image_url: width: 100 }}"
+    data-src="{{ image.src | image_url: width: 800 }}"
+    data-srcset="
+      {{ image.src | image_url: width: 400 }} 400w,
+      {{ image.src | image_url: width: 600 }} 600w,
+      {{ image.src | image_url: width: 800 }} 800w,
+      {{ image.src | image_url: width: 1000 }} 1000w"
+    data-lazy
+    sizes="(max-width: 480px) 100vw, (max-width: 768px) 80vw, 60vw"
+    alt="{{ image.alt | escape }}"
+    width="{{ image.width }}"
+    height="{{ image.height }}"
+    loading="lazy"
+    class="product-image"
+  />
+{% endif %}
