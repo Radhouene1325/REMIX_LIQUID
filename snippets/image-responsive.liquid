@@ -1,0 +1,31 @@
+{% comment %}
+  Responsive Image Component with Lazy Loading
+  Usage: {% render 'image-responsive' with image: product.featured_image %}
+{% endcomment %}
+
+{% unless image == blank %}
+  {%- capture sizes -%}
+    (max-width: 480px) 100vw,
+    (max-width: 768px) 50vw,
+    (max-width: 1024px) 33vw,
+    25vw
+  {%- endcapture -%}
+
+  {%- capture srcset -%}
+    {{ image | image_url: width: 480 }} 480w,
+    {{ image | image_url: width: 768 }} 768w,
+    {{ image | image_url: width: 1024 }} 1024w,
+    {{ image | image_url: width: 1440 }} 1440w
+  {%- endcapture -%}
+
+  <img
+    src="{{ image | image_url: width: 480 }}"
+    srcset="{{ srcset }}"
+    sizes="{{ sizes }}"
+    alt="{{ image.alt | escape }}"
+    class="responsive-image"
+    loading="lazy"
+    width="{{ image.width }}"
+    height="{{ image.height }}"
+  />
+{% endunless %}

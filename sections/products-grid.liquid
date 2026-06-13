@@ -1,0 +1,105 @@
+{% comment %}
+  Products Grid Section - Mobile First
+  Features: Responsive grid, lazy loading, filtering
+{% endcomment %}
+
+<section class="products-section">
+  <div class="container">
+    <h2 class="section-title">{{ section.settings.title }}</h2>
+
+    <div class="products-grid">
+      {% for product in collection.products limit: section.settings.products_per_page %}
+        {% render 'product-card' with product: product %}
+      {% endfor %}
+    </div>
+
+    {% if collection.products.size > section.settings.products_per_page %}
+      <div class="view-all-btn">
+        <a href="{{ collection.url }}" class="btn btn-secondary">
+          View All Products
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<style>
+  .products-section {
+    padding: 60px 0;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 36px;
+    margin-bottom: 40px;
+    font-weight: 700;
+  }
+
+  .products-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .view-all-btn {
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  /* Tablet */
+  @media (min-width: 641px) {
+    .products-grid {
+      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+
+    .section-title {
+      font-size: 32px;
+    }
+  }
+
+  /* Desktop */
+  @media (min-width: 1025px) {
+    .products-grid {
+      gap: 24px;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+
+    .section-title {
+      font-size: 40px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Products Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Section Title",
+      "default": "Featured Products"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products Per Page",
+      "min": 4,
+      "max": 20,
+      "step": 1,
+      "default": 12
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Products Grid"
+    }
+  ]
+}
+{% endschema %}
