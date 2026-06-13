@@ -1,0 +1,20 @@
+{
+  "name": "remix-liquid-theme",
+  "version": "2.0.0",
+  "description": "Mobile-first, performance-optimized Shopify Liquid theme",
+  "scripts": {
+    "dev": "shopify theme dev",
+    "build": "npm run minify:css && npm run minify:js",
+    "minify:css": "npx csso assets/*.css -o assets/theme.min.css",
+    "minify:js": "npx terser assets/*.js -o assets/theme.min.js",
+    "test": "npm run lighthouse",
+    "lighthouse": "npx lighthouse https://your-store.myshopify.com --chrome-flags=--headless"
+  },
+  "devDependencies": {
+    "@shopify/cli": "^3.0.0",
+    "tailwindcss": "^3.4.0",
+    "csso-cli": "^4.0.0",
+    "terser": "^5.30.0",
+    "lighthouse": "^11.0.0"
+  }
+}

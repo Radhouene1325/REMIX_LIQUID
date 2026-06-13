@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="{{ settings.primary_color }}" />
+    <title>{{ page_title }}</title>
+    <meta name="description" content="{{ page_description | escape }}" />
+
+    <!-- Critical CSS (Inline) -->
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+      img { max-width: 100%; height: auto; }
+    </style>
+
+    <!-- Preload Critical Resources -->
+    <link rel="preconnect" href="https://cdn.shopify.com" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://cdn.shopify.com" />
+
+    <!-- Stylesheets -->
+    {{ 'tailwind.css' | asset_url | stylesheet_tag }}
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+
+    <!-- Web Vitals Monitoring -->
+    <script async src="https://cdn.jsdelivr.net/npm/web-vitals@3/dist/web-vitals.iife.js"></script>
+
+    {% render 'seo-schema' %}
+  </head>
+
+  <body>
+    <!-- Header -->
+    {% render 'header' %}
+
+    <!-- Main Content -->
+    <main id="MainContent" class="content-main">
+      {{ content_for_layout }}
+    </main>
+
+    <!-- Footer -->
+    {% render 'footer' %}
+
+    <!-- Mobile Navigation -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        {% if request.page_type == 'product' %}
+          // Product page specific optimizations
+        {% elsif request.page_type == 'collection' %}
+          // Collection page specific optimizations
+        {% endif %}
+      });
+    </script>
+
+    <!-- Performance Scripts (Deferred) -->
+    {{ 'performance.js' | asset_url | script_tag: defer: true }}
+    {{ 'mobile-nav.js' | asset_url | script_tag: defer: true }}
+    
+    <!-- Shopify Analytics -->
+    {{ content_for_header }}
+  </body>
+</html>

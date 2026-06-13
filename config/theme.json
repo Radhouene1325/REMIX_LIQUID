@@ -1,0 +1,14 @@
+{
+  "name": "REMIX_LIQUID Premium Theme",
+  "version": "2.0.0",
+  "description": "Mobile-first, performance-optimized Shopify theme",
+  "author": "Radhouene1325",
+  "roles": ["development", "production"],
+  "supports": {
+    "api_version": "2024-01",
+    "features": {
+      "mobile": true,
+      "ai_content_generation": true
+    }
+  }
+}
